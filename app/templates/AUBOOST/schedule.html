@@ -1,0 +1,51 @@
+{% extends "AUBOOST/template.html" %}
+
+{% block jquery %}
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'></script>
+
+{% endblock %}
+{% block morehead %}
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel='stylesheet' type='text/css' href='../../static/css/jquery.weekcalendar.css' />
+    <link rel='stylesheet' type='text/css' href='../../static/css/schedule.css'/>
+
+
+    <script type='text/javascript' src='../../static/js/jquery.weekcalendar.js'></script>
+    <script type='text/javascript' src="../../static/js/weekCalender.js"></script>
+
+{% endblock %}
+{%  block body %}
+    <div id="container" >
+        <h1 class="form_header">Please add your available Times</h1>
+
+
+        <div id='calendar'></div>
+
+        <!--
+            pop-up container,
+            which will be shown when timeslot select
+        -->
+        <div id="event_edit_container">
+            <form method="post" action="{{ url_for('AUBOOST.schedule') }}">
+                <input type="hidden" />
+                <ul>
+                    <li>
+                        <span>Date: </span><span class="date_holder"></span>
+                    </li>
+                    <li>
+                        <label for="start">Start Time: </label><select name="start"><option value="">Select Start Time</option></select>
+                    </li>
+                    <li>
+                        <label for="end">End Time: </label><select name="end"><option value="">Select End Time</option></select>
+                    </li>
+
+                </ul>
+                <button type="submit">save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

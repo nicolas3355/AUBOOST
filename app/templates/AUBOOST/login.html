@@ -1,0 +1,37 @@
+{% extends "AUBOOST/template.html" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1 class="text-center">AUBOOST</h1>
+            <form action="{{ url_for('AUBOOST_auth.login') }}" method="POST" role="form">
+		        {{ form.csrf_token }}
+                {{ form.next_url() }}
+                <div class="form-group">
+                    {{ form.email(class="form-control", placeholder='Email') }}
+                    <div class="error">
+                        {% for error in form.errors['email'] %}
+                            * {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.password(class="form-control", placeholder='Password') }}
+                    <div class="error">
+                        {% for error in form.errors['password'] %}
+                            * {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {{ form.rememberme() }} Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-block">Sign in</button>
+        		<small><a href="{{ url_for('AUBOOST_auth.signup') }}">Sign up</a> | <a href="{{ url_for('AUBOOST_auth.reset_password') }}">Forgot your Password?</a></small>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

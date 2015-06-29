@@ -1,0 +1,316 @@
+{% extends "AUBOOST/template.html" %}
+
+{% block morehead %}
+    <script type="text/javascript">
+        function edit_user_info() {
+            $('.user_info').each(
+                    function() {
+                        $(this).prop('disabled', false);
+                        this.style.borderStyle = 'solid';
+                        this.style.borderWidth = '0 0 1px 0';
+                        this.style.borderColor = 'darkred';
+                        this.style.borderRadius = '10px';
+                    }
+            );
+
+            document.getElementById('save_user_info').style.visibility = 'visible';
+        }
+
+        function edit_user_password() {
+            $('.user_password').each(
+                    function() {
+                        $(this).prop('disabled', false);
+                        this.style.borderStyle = 'solid';
+                        this.style.borderWidth = '0 0 1px 0';
+                        this.style.borderColor = 'darkred';
+                        this.style.borderRadius = '10px';
+                    }
+            );
+
+            document.getElementById('save_user_password').style.visibility = 'visible';
+        }
+
+        function edit_user_payment() {
+            $('.stripe-button-el').click();
+        }
+
+        $(function () {
+            $('.user_password').each(
+                    function() {
+                        $(this).val('abcdefabcdef');
+                    }
+            );
+        });
+
+        function fillAndSendDelHiddenForm(course_name,course_number){
+            $('#course_name_del').val(course_name);
+            $('#course_number_del').val(course_number);
+            $('#course_del').click();
+        }
+    </script>
+
+    <style>
+        .stripe-button-el {
+            visibility: hidden !important;
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-5 col-md-offset-1">
+        <h1 class="form_header">User Account</h1>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" style="padding-top: 20px;">
+                <form method="post" action="{{ url_for('AUBOOST.account') }}" class="form-horizontal big_form">
+                    {{ form.csrf_token }}
+
+                    <div class="form-group underlined">
+                        {{ form.name.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ form.name(class="editable_input user_info", disabled=True) }}
+                            <div class="error">
+                                {% for error in form.errors['name'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group underlined">
+                        {{ form.major.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ form.major(class="editable_input user_info", disabled=True) }}
+                            <div class="error">
+                                {% for error in form.errors['major  '] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group underlined">
+                        {{ form.email.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ form.email(class="editable_input user_info", disabled=True) }}
+                            <div class="error">
+                                {% for error in form.errors['email'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group underlined">
+                        {{ form.bio.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ form.bio(class="editable_input user_info", disabled=True) }}
+                            <div class="error">
+                                {% for error in form.errors['bio'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="save_user_info" style="visibility:hidden;">
+                        <button type="submit" class="form-control form_submit">Save</button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-1" style="text-align: right;"> <a href="javascript:edit_user_info()" class="inverted-page"> EDIT </a></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" style="padding-top: 20px;">
+                <form method="post" action="{{ url_for('AUBOOST.account_password') }}" class="form-horizontal big_form">
+                    {{ password_form.csrf_token }}
+
+                    <div class="form-group underlined">
+                        {{ password_form.password.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ password_form.password(class="editable_input user_password", disabled=True) }}
+                            <div class="error">
+                                {% for error in password_form.errors['password'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group underlined">
+                        {{ password_form.password_confirmation.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ password_form.password_confirmation(class="editable_input user_password", disabled=True) }}
+                            <div class="error">
+                                {% for error in password_form.errors['password_confirmation'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="save_user_password" style="visibility:hidden;">
+                        <button type="submit" class="form-control form_submit">Save</button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-1" style="text-align: right;"> <a href="javascript:edit_user_password()" class="inverted-page"> CHANGE </a></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" style="padding-top: 20px;">
+                <form method="post" action="AUBOOST.account" class="form-horizontal big_form">
+                    {{ payment_form.csrf_token }}
+
+                    <div class="form-group underlined">
+                        {{ payment_form.payment.label(class="col-sm-3 control-label") }}
+                        <div class="col-sm-9">
+                            {{ payment_form.payment(class="editable_input user_payment", disabled=True) }}
+                            <div class="error">
+                                {% for error in payment_form.errors['payment'] %}
+                                    * {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button hidden_button"
+                            data-key="{{ config.get('STRIPE_PUBLISHABLE_KEY') }}"
+                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                            data-name="AUBOOST"
+                            data-description="Payment Method for subscription."
+                            data-panel-label="Payment"
+                            data-label="Update Payment Method"
+                            data-amount=""
+                            data-email="{{ email }}"
+                            data-allow-remember-me="false">
+                    </script>
+                </form>
+            </div>
+
+            <div class="col-md-1" style="text-align: right;"> <a href="javascript:edit_user_payment()" class="inverted-page"> UPDATE </a></div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-md-offset-1">
+        <div class="row">
+            <h1 class="form_header">Profile Pic</h1>
+            <div class="talk_div">
+                <span class="bullet">• </span><span class="element">Gravatar</span><br>
+                <p>
+                    Understanding customers and being receptive to
+                    their feedback is a basic survival need for any company.
+                    We here at AUBOOST endorse both security and conveniance.
+                    That's why we use Gravatar one profile pic to rule them all !<br>
+                    In case you don't have an account head over to their
+                    <a href="http://en.gravatar.com/">site</a> and upload your profile pic :)
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="form_header">Courses That you teach</h1>
+
+            <table class="round_table round_border">
+                <tr>
+                    <th width="65%"> Course Name </th>
+                    <th> Course Number </th>
+                </tr>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.course_number }}<img onClick="fillAndSendDelHiddenForm('{{ course.course_name }}'
+                                ,'{{ course.course_number}}')" src="../../static/img/delete-icon.png"></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No Courses to teach.</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="row">
+            <h1 class="form_header">Courses To ADD</h1>
+            <form method="post" action="{{ url_for('AUBOOST.account_courses') }}" class="form-horizontal big_form">
+                {{ courses_form.csrf_token }}
+                <div class="form-group underlined">
+                    {{ courses_form.course_name.label(class="col-sm-3 control-label") }}
+                    <div class="col-sm-9">
+                        {{ courses_form.course_name }}
+                        <div class="error">
+                            {% for error in courses_form.errors['course_name'] %}
+                                * {{ error }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group underlined">
+                    {{ courses_form.course_number.label(class="col-sm-3 control-label") }}
+                    <div class="col-sm-9">
+                        {{ courses_form.course_number }}
+
+                        <div class="error">
+                            {% for error in courses_form.errors['course_number'] %}
+                                * {{ error }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="form-control form_submit">Add</button>
+
+            </form>
+        </div>
+        <div class="row">
+            <h1 class="form_header">Invoices</h1>
+            <div class="talk_div">
+                <div class="col-md-12" style="padding-top: 20px;">
+                    <table class="round_border grey_table" style="width: 80% !important;">
+                        {% for invoice in invoices %}
+                            <tr>
+                                <td style="font-weight: normal;">
+                                    <b>{{ invoice['name'] }}</b>: ${{ invoice['amount'] }}, {{ invoice['date'] }}. {{ invoice['trial'] }}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td style="font-weight: bold; text-align: center;">No Invoices Yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form method="post" action="{{ url_for('AUBOOST.delCourse') }}" class="form-horizontal big_form">
+                {{ delCourse_form.csrf_token }}
+
+
+                    <div class="col-sm-9">
+                        {{ delCourse_form.course_name_del }}
+
+                    </div>
+
+
+                    <div class="col-sm-9">
+                        {{ delCourse_form.course_number_del }}
+
+
+                    </div>
+
+
+                <button id="course_del" type="submit" class="form-control form_submit" style="visibility:hidden;">DEL</button>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+    

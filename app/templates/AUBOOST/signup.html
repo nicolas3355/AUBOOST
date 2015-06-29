@@ -1,0 +1,74 @@
+{% extends "AUBOOST/template.html" %}
+
+{% block body %}
+<div class="col-md-6  col-md-offset-3">
+    <h1 class="form_header">Create an Account</h1>
+    
+    <form method="post" action="{{ url_for('AUBOOST_auth.signup') }}" class="form-horizontal big_form">
+    {{ form.csrf_token }}
+    
+    <div class="form-group">
+        {{ form.name.label(class="col-md-3 control-label") }}
+        <div class="col-md-9">
+            {{ form.name(class="form-control") }}
+            <div class="error">
+                {% for error in form.errors['name'] %}
+                    * {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.major.label(class="col-md-3 control-label") }}
+        <div class="col-md-9">
+            {{ form.major(class="form-control") }}
+            <div class="error">
+                {% for error in form.errors['major'] %}
+                    * {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.email.label(class="col-md-3 control-label") }}
+        <div class="col-md-9">
+            {{ form.email(class="form-control") }}
+            <div class="error">
+                {% for error in form.errors['email'] %}
+                    * {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.password.label(class="col-md-3 control-label") }}
+        <div class="col-md-9">
+            {{ form.password(class="form-control") }}
+            <div class="error">
+                {% for error in form.errors['password'] %}
+                    * {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.password_confirmation.label(class="col-md-3 control-label") }}
+        <div class="col-md-9">
+            {{ form.password_confirmation(class="form-control") }}
+            <div class="error">
+                {% for error in form.errors['password_confirmation'] %}
+                    * {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <button type="submit" class="form-control form_submit">REGISTER</button>
+    </div>
+    
+    </form>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "AUBOOST/template.html" %}
+{% block morehead %}
+    <script src="../../static/js/star-rating.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../../static/css/star-rating.css" media="all"  type="text/css"/>
+
+
+    <script>
+        $(function() {
+
+            $("#kartik").change(function () {
+                var rating=this.value;
+                var b=document.getElementById("rating");
+                b.value=rating;
+            });
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    <!--
+        display pic
+        display name
+        display rating
+        diplay bio
+        display ability to rate if not owner and has previously had a course with him
+        display courses that the tutor teach
+        display available time and ability to change if owner
+        link to send request if not owner
+        link to send a message if not owner
+
+    <!-- Navigation -->
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-3">
+                <p class="lead">Courses that I tutor</p>
+                <div id="parent">
+                    <div class="panel list-group">
+                        {% for course_name in courses %}
+                            <a href="#" class="list-group-item" data-toggle="collapse" data-target="#{{ course_name }}" data-parent="#menu">{{ course_name }} <span class="label label-info">{{ courses[course_name]|length }}</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
+                            <div id="{{ course_name }}" class="sublinks collapse">
+                                {% for course_number in courses[course_name] %}
+                                    <a href="#" class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> {{course_number}}</a>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ user.avatar(300)}}" alt="">
+                    <div class="caption-full" style="text-align:center; padding-top:2px;">
+                        <h4 class="pull-right"></h4>
+                        <h1>{{ user.name }}</h1>
+                        <p>MAJOR:{{ user.major }}</p>
+                        {% if user.bio == None %}
+                            {% if owner %}
+                                <p>you have not provided a Bio please go to <a href="{{url_for('AUBOOST.account')}}"> Account </a> and write one</p>
+                            {% else %}
+                                <p> This user have not provided any bio!</p>
+                            {% endif %}
+                        {% else %}
+                            <p>{{ user.bio }}</p>
+                        {% endif %}
+
+                    </div>
+                    <div class="ratings">
+                        {% if user.numberOfRaters() == None %}
+                            <p class="pull-right">0 reviews</p>
+                        {% elif user.numberOfRaters() == 1 %}
+                            <p class="pull-right">1 review</p>
+                        {% else %}
+                            <p class="pull-right">{{ user.numberOfRaters() }} reviews</p>
+                        {% endif %}
+
+                        <p>
+                            {% for star in range(0,user.ratingOfUser()|int) %}
+                                <span class="glyphicon glyphicon-star"></span>
+                            {% endfor %}
+                            {% for emptyStar in range(user.ratingOfUser()|int,5) %}
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            {% endfor %}
+                            {{ user.ratingOfUser()|int }} stars
+                        </p>
+                        <div><a href="mailto:{{ user.email }}"><button class="btn ">Drop Him an email!</button></a></div>
+                    </div>
+
+                </div>
+
+                <div class="well">
+                    <h2>Reviews:</h2>
+                    <hr>
+                    {% for review in user.reviews() %}
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <a href="{{ url_for('AUBOOST.profile',user_email=review.reviewer.email) }}">{{ review.reviewer.name }}:</a>
+
+                                <p>{{ review.review }}</p>
+                            </div>
+                        </div>
+
+                        <hr>
+                    {% endfor %}
+                    <form method="post" action="{{ url_for('AUBOOST.rate',user_email=user.email) }}" class="form-horizontal big_form">
+                        <div class="form-group">
+                            {{ form_rating.csrf_token}}
+                            <input id="kartik" class="rating" data-stars="5" data-step="1"/>
+                            {{ form_rating.rating(class="form-control ratingForm") }}
+                            <div class="error">
+                                {% for error in form_rating.errors['rating'] %}
+                                    * {{ error }}
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+                        <button id="submitRating" type="submit" class="form-control form_submit">rate</button>
+                    </form>
+                    <form method="post" action="{{ url_for('AUBOOST.review',user_email=user.email) }}" class="form-horizontal big_form">
+                        <div class="form-group">
+                            {{ form_review.review.label(class="control-label") }}
+                            {{ form_review.review(class="form-control") }}
+
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="form-control form_submit">Leave a Review</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+{% endblock %}

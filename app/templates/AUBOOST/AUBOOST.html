@@ -1,0 +1,100 @@
+{% extends "AUBOOST/template.html" %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Courses</p>
+                <div id="parent">
+                    <div class="panel list-group">
+                        {% for course_name in courses %}
+                        <a href="#" class="list-group-item" data-toggle="collapse" data-target="#{{ course_name }}" data-parent="#menu">{{ course_name }} <span class="label label-info">{{ courses[course_name]|length }}</span> <span class="glyphicon glyphicon-book pull-right"></span></a>
+                        <div id="{{ course_name }}" class="sublinks collapse">
+                            {% for course_number in courses[course_name] %}
+                            <a href="{{ url_for('AUBOOST.AUBOOST_tutors',course=course_name,number=course_number) }}" class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> {{course_number}}</a>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-9">
+
+                {% if users==[] %}
+                    <div class="row">
+                        <h1 class="form_header">Welcome To AUBOOST</h1>
+                        <div class="talk_div">
+                            <span class="bullet">• </span><span class="element">Who are we?</span><br>
+                            <p>
+                                We are a passionate AUB group of students who are seeking to make the students experience
+                                here at aub better.Here at aub boost you can find a tutor to help you in those pesky AUB
+                                courses.Or you can be a tutor and get money while helping other students.
+                            </p>
+                        </div>
+                        <div class="talk_div">
+                            <span class="bullet">• </span><span class="element">Try it out click on some courses at the
+                            left ...</span><br>
+                            <p>
+                                This page will then switch to the tutors that are tutoring that course. you can be one of
+                                them by clicking on <a href="{{ url_for('AUBOOST.account') }}">account</a> and adding
+                                the courses you want to tutor in.
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+
+                    <div class="row">
+                    {% for user in users %}
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                <img src={{ user.avatar(100) }} alt="">
+                                <div class="caption">
+                                    <h4 class="pull-right"> {{ user.major }} </h4>
+                                    <h4><a href="{{ url_for('AUBOOST.profile',user_email=user.email) }}">{{ user.name }}</a>
+                                    </h4>
+                                    {% if user.bio == None or user.bio.strip() == ''%}
+                                        <p>This user has no bio ... message him so that he puts one</p>
+
+                                    {% else  %}
+                                        <p> {{ user.bio }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="ratings">
+                                    {% if user.numberOfRaters() == None %}
+                                        <p class="pull-right">0 reviews</p>
+                                    {% elif user.numberOfRaters() == 1 %}
+                                        <p class="pull-right">1 review</p>
+                                    {% else %}
+                                        <p class="pull-right">{{ user.numberOfRaters() }} reviews</p>
+                                    {% endif %}
+                                    <p>
+                                        {% for star in range(0,user.ratingOfUser()|int) %}
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        {% endfor %}
+                                        {% for emptyStar in range(user.ratingOfUser()|int,5) %}
+                                            <span class="glyphicon glyphicon-star-empty"></span>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

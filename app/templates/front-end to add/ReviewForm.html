@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<!-- This is the funtion for the ratin-filler------>
+	<script>
+	(function ($) {
+
+  $.fn.rating = function () {
+
+    var element;
+
+    // A private function to highlight a star corresponding to a given value
+    function _paintValue(ratingInput, value) {
+      var selectedStar = $(ratingInput).find('[data-value=' + value + ']');
+      selectedStar.removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+      selectedStar.prevAll('[data-value]').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+      selectedStar.nextAll('[data-value]').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+    }
+
+    // A private function to remove the selected rating
+    function _clearValue(ratingInput) {
+      var self = $(ratingInput);
+      self.find('[data-value]').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+      self.find('.rating-clear').hide();
+      self.find('input').val('').trigger('change');
+    }
+
+    // Iterate and transform all selected inputs
+    for (element = this.length - 1; element >= 0; element--) {
+
+      var el, i, ratingInputs,
+        originalInput = $(this[element]),
+        max = originalInput.data('max') || 5,
+        min = originalInput.data('min') || 0,
+        clearable = originalInput.data('clearable') || null,
+        stars = '';
+
+      // HTML element construction
+      for (i = min; i <= max; i++) {
+        // Create <max> empty stars
+        stars += ['<span class="glyphicon glyphicon-star-empty" data-value="', i, '"></span>'].join('');
+      }
+      // Add a clear link if clearable option is set
+      if (clearable) {
+        stars += [
+          ' <a class="rating-clear" style="display:none;" href="javascript:void">',
+          '<span class="glyphicon glyphicon-remove"></span> ',
+          clearable,
+          '</a>'].join('');
+      }
+
+      el = [
+        // Rating widget is wrapped inside a div
+        '<div class="rating-input">',
+        stars,
+        // Value will be hold in a hidden input with same name and id than original input so the form will still work
+        '<input type="hidden" name="',
+        originalInput.attr('name'),
+        '" value="',
+        originalInput.val(),
+        '" id="',
+        originalInput.attr('id'),
+        '" />',
+        '</div>'].join('');
+
+      // Replace original inputs HTML with the new one
+      originalInput.replaceWith(el);
+
+    }
+
+    // Give live to the newly generated widgets
+    $('.rating-input')
+      // Highlight stars on hovering
+      .on('mouseenter', '[data-value]', function () {
+        var self = $(this);
+        _paintValue(self.closest('.rating-input'), self.data('value'));
+      })
+      // View current value while mouse is out
+      .on('mouseleave', '[data-value]', function () {
+        var self = $(this);
+        var val = self.siblings('input').val();
+        if (val) {
+          _paintValue(self.closest('.rating-input'), val);
+        } else {
+          _clearValue(self.closest('.rating-input'));
+        }
+      })
+      // Set the selected value to the hidden field
+      .on('click', '[data-value]', function (e) {
+        var self = $(this);
+        var val = self.data('value');
+        self.siblings('input').val(val).trigger('change');
+        self.siblings('.rating-clear').show();
+        e.preventDefault();
+        false
+      })
+      // Remove value on clear
+      .on('click', '.rating-clear', function (e) {
+        _clearValue($(this).closest('.rating-input'));
+        e.preventDefault();
+        false
+      })
+      // Initialize view with default value
+      .each(function () {
+        var val = $(this).find('input').val();
+        if (val) {
+          _paintValue(this, val);
+          $(this).find('.rating-clear').show();
+        }
+      });
+
+  };
+
+  // Auto apply conversion of number fields with class 'rating' into rating-fields
+  $(function () {
+    if ($('input.rating[type=number]').length > 0) {
+      $('input.rating[type=number]').rating();
+    }
+  });
+
+}(jQuery));
+</script>
+
+<!------------end of rating filler----------->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title> New Message </title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom CSS -->
+		<link href="css/Tutor-Search.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">AUBoost</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav navbar-left">
+								<li>
+									<a href="UserProfile.html">Profile</a>
+								</li>
+								<li>
+									<a href="TutorSearch.html">Tutors</a>
+								</li>
+								<li>
+									<a href="#">Contact</a>
+								</li>
+								<li>
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+											Notifications
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											  <li><a href="Requests.html">Requests</a></li>
+											  <li role="presentation" class="divider"> </li>
+											  <li><a href="Messages.html"><span class ="text">  (3) <span> Messages </a></li>
+										</ul>
+									</div>
+								 </li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li>								
+									<a href="www.google.com"><span class="glyphicon glyphicon-search"></span> Search </a>
+								</li>
+								<li>
+									<a href="Login.html">Logout</a>
+								</li>
+							</ul>
+						</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+
+		<!-- Page Content -->
+		<div class="container">
+		  <form action="Requests2.html" method="POST">
+		  <div class=" col-md-9 col-lg-9 "> 
+					  <table class="table table-user-information">
+		<tr>
+			<td> To: </td>
+			<td><input type="text" name="Email_Id" maxlength="100" />@mail.aub.edu</td>
+		</tr>
+	 
+	<!----- Mobile Number ---------------------------------------------------------->
+		<tr>
+			<td> cc: </td>
+			<td><input type="text" name="Email_Id" maxlength="100" />@mail.aub.edu</td>
+		</tr>
+		
+	<!----- Optional Message ------------------------------------------->
+	
+	<tr>
+			<td> Message: </td>
+			<td>
+				<input type="text" name="Message" maxlength="140" />
+			</td>
+	</tr>
+
+	<!----- Submit and Reset ------------------------------------------------->
+		<tr>
+			<td colspan="2" align="center">
+				<a class="btn btn-success" href = "Messages2.html" input type="submit" value="Submit"> Send </a>
+				<a class="btn btn-success" input type="reset" value="Reset" href "MessageForm.html"> Discard & Create New </a>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<input type="number" class="rating" data-min="1" data-max="5" value="0">
+		</tr>
+	</table>
+	</div>
+	 
+	</form>
+		</div>
+		<!-- /.container -->
+
+		<div class="container">
+
+			<hr>
+
+			<!-- Footer -->
+			<footer>
+				<div class="row">
+					<div class="col-lg-12">
+						<p>Copyright &copy; AUBoost 2015</p>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+		<!-- /.container -->
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

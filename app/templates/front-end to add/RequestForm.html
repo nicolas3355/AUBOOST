@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Request Form</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom CSS -->
+		<link href="css/Tutor-Search.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">AUBoost</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav navbar-left">
+								<li>
+									<a href="UserProfile.html">Profile</a>
+								</li>
+								<li>
+									<a href="TutorSearch.html">Tutors</a>
+								</li>
+								<li>
+									<a href="#">Contact</a>
+								</li>
+								<li>
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+											Notifications
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											  <li><a href="Requests.html">Requests</a></li>
+											  <li role="presentation" class="divider"> </li>
+											  <li><a href="Messages.html"><span class ="text">  (3) <span> Messages </a></li>
+										</ul>
+									</div>
+								 </li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li>								
+									<a href="www.google.com"><span class="glyphicon glyphicon-search"></span> Search </a>
+								</li>
+								<li>
+									<a href="Login.html">Logout</a>
+								</li>
+							</ul>
+						</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+
+		<!-- Page Content -->
+		<div class="container">
+		  <form action="Requests2.html" method="POST">
+		  <div class=" col-md-9 col-lg-9 "> 
+					  <table class="table table-user-information">	
+	 
+	<!----- Course Name & Number ---------------------------------------------------------->
+		<tr>
+			<td>	Choose Your Course:	</td>
+			<td>
+				<select name="Course Name" id="Course_Name">
+					<option value="-1"> Course (eg. CMPS) </option>
+					<option value="Computer Science"> CMPS </option>
+					<option value="Mathematics"> MATH </option>
+					<option value="Physics"> PHYS </option>
+					<option value="Chemistry"> CHEM </option>
+					<option value="Biology"> BIOL </option>
+				</select>
+				
+				<select name="Course Number" id="Course_Number">
+					<option value="-1"> Number (eg. 101) </option>
+					<option value="101"> 101 </option>
+					<option value="200"> 200 </option>
+					<option value="212"> 212 </option>
+					<option value="211"> 211 </option>
+					<option value="102"> 102 </option>
+				</select>
+			</td>
+		</tr>
+	 
+	<!----- Choose Your Tutor ---------------------------------------------------------->
+		<tr>
+			<td>Select the Tutor Tutoring This Course</td>
+			<td> 
+				<select name="Tutor Name" id="Tutor_Name">
+					<option value="-1"> Tutor </option>
+					<option value="Kareem Salhab"> Kareem Salhab </option>
+					<option value=" Nicolas El Haddad"> Nicolas El Haddad </option>
+					<option value="Hassan Khousheish"> Hassan Khousheish </option>
+					<option value="Philippe Yahchouchi"> Philippe Yahchouchi </option>
+					<option value="Mahmoud Bdeir"> Mahmoud Bdeir </option>
+				</select>
+			</td>
+		</tr>
+	 
+	<!----- Select the Date -------------------------------------------------------->
+		<tr>
+		<td>Select the Date of your session:</td>
+		 
+		<td>
+			<select name="Session Day" id="Session_Day">
+				<option value="-1">Day:</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				 
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				 
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+				 
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="30">30</option>
+				 
+				<option value="31">31</option>
+			</select>
+			 
+			<select id="Session Month" name="Session_Month">
+				<option value="-1">Month:</option>
+				<option value="January">Jan</option>
+				<option value="February">Feb</option>
+				<option value="March">Mar</option>
+				<option value="April">Apr</option>
+				<option value="May">May</option>
+				<option value="June">Jun</option>
+				<option value="July">Jul</option>
+				<option value="August">Aug</option>
+				<option value="September">Sep</option>
+				<option value="October">Oct</option>
+				<option value="November">Nov</option>
+				<option value="December">Dec</option>
+			</select>
+			 
+			<select name="Session_Year" id="Session_Year">
+			 
+				<option value="-1">Year:</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+			</select>
+		</td>
+		</tr>
+		
+	<!-------- Time(s)--------------------------------------------------------->
+	
+	<tr>
+		<td> Select Time Range </td>
+		<td> From:
+			<select name="Start Time" id="Start_Time">
+				<option value="-1"> Start Time </option>
+				<option value="0:00"> 0:00 </option>
+				<option value="1:00"> 1:00 </option>
+				<option value="2:00"> 2:00 </option>
+				<option value="3:00"> 3:00 </option>
+				<option value="4:00"> 4:00 </option>
+				<option value="5:00"> 5:00 </option>
+				<option value="6:00"> 6:00 </option>
+				<option value="7:00"> 7:00 </option>
+				<option value="8:00"> 8:00 </option>
+				<option value="9:00"> 9:00 </option>
+				<option value="10:00"> 10:00 </option>
+				<option value="11:00"> 11:00 </option>
+				<option value="12:00"> 12:00 </option>
+				<option value="13:00"> 13:00 </option>
+				<option value="14:00"> 14:00 </option>
+				<option value="15:00"> 15:00 </option>
+				<option value="16:00"> 16:00 </option>
+				<option value="17:00"> 17:00 </option>
+				<option value="18:00"> 18:00 </option>
+				<option value="19:00"> 19:00 </option>
+				<option value="20:00"> 20:00 </option>
+				<option value="21:00"> 21:00 </option>
+				<option value="22:00"> 22:00 </option>
+				<option value="23:00"> 23:00 </option>
+			</select>
+		</td>
+		<td> To: 
+			<select name="End Time" id="End_Time">
+				<option value="-1"> End Time </option>
+				<option value="0:00"> 0:00 </option>
+				<option value="1:00"> 1:00 </option>
+				<option value="2:00"> 2:00 </option>
+				<option value="3:00"> 3:00 </option>
+				<option value="4:00"> 4:00 </option>
+				<option value="5:00"> 5:00 </option>
+				<option value="6:00"> 6:00 </option>
+				<option value="7:00"> 7:00 </option>
+				<option value="8:00"> 8:00 </option>
+				<option value="9:00"> 9:00 </option>
+				<option value="10:00"> 10:00 </option>
+				<option value="11:00"> 11:00 </option>
+				<option value="12:00"> 12:00 </option>
+				<option value="13:00"> 13:00 </option>
+				<option value="14:00"> 14:00 </option>
+				<option value="15:00"> 15:00 </option>
+				<option value="16:00"> 16:00 </option>
+				<option value="17:00"> 17:00 </option>
+				<option value="18:00"> 18:00 </option>
+				<option value="19:00"> 19:00 </option>
+				<option value="20:00"> 20:00 </option>
+				<option value="21:00"> 21:00 </option>
+				<option value="22:00"> 22:00 </option>
+				<option value="23:00"> 23:00 </option>
+			</select>
+		</td>
+		
+		<td>
+			<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-plus"></span></button>
+		</td>
+	</tr>
+	 
+	<!----- Email Id ---------------------------------------------------------->
+		<tr>
+			<td> AUB Email: </td>
+			<td><input type="text" name="Email_Id" maxlength="100" />@mail.aub.edu</td>
+		</tr>
+	 
+	<!----- Mobile Number ---------------------------------------------------------->
+		<tr>
+			<td> Mobile Number: </td>
+			<td>
+				<input type="text" name="Mobile_Number" maxlength="20" /> Format: xx/xxxxxx
+			</td>
+		</tr>
+		
+	<!----- Optional Message ------------------------------------------->
+	
+	<tr>
+			<td> Add a message (Optional:) </td>
+			<td>
+				<input type="text" name="Message" maxlength="140" />
+			</td>
+	</tr>
+
+	<!----- Submit and Reset ------------------------------------------------->
+		<tr>
+			<td colspan="2" align="center">
+				<a class="btn btn-success" href = "Requests2.html" input type="submit" value="Submit"> Submit </a>
+				<a class="btn btn-success" input type="reset" value="Reset"> Reset </a>
+			</td>
+		</tr>
+	</table>
+	</div>
+	 
+	</form>
+		</div>
+		<!-- /.container -->
+
+		<div class="container">
+
+			<hr>
+
+			<!-- Footer -->
+			<footer>
+				<div class="row">
+					<div class="col-lg-12">
+						<p>Copyright &copy; AUBoost 2015</p>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+		<!-- /.container -->
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>
